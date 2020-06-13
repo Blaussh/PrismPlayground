@@ -22,6 +22,7 @@ namespace PrismOutlook.Modules.Mail
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(ViewA));
 
             _regionManager.RegisterViewWithRegion(RegionNames.RibbonRegion, typeof(HomeTab));
+            _regionManager.RegisterViewWithRegion(RegionNames.OutlookGroupRegion, typeof(MailGroup));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
