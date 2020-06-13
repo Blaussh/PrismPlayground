@@ -1,5 +1,5 @@
-﻿using Infragistics.Windows.Ribbon;
-using System.Windows;
+﻿using Infragistics.Themes;
+using Infragistics.Windows.Ribbon;
 
 namespace PrismOutlook.Views
 {
@@ -11,6 +11,8 @@ namespace PrismOutlook.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            ThemeManager.ApplicationTheme = new Office2013Theme();
         }
     }
 }
