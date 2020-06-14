@@ -18,9 +18,6 @@ namespace PrismOutlook.Modules.Mail
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            //TODO: remove
-            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(ViewA));
-
             _regionManager.RegisterViewWithRegion(RegionNames.RibbonRegion, typeof(HomeTab));
             _regionManager.RegisterViewWithRegion(RegionNames.OutlookGroupRegion, typeof(MailGroup));
         }
