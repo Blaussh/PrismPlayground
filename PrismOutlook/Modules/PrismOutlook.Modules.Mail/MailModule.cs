@@ -27,6 +27,7 @@ namespace PrismOutlook.Modules.Mail
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             ViewModelLocationProvider.Register<MailGroup, MailGroupViewModel>();
+            containerRegistry.RegisterForNavigation<MailList, MailListViewModel>();
         }
     }
 }

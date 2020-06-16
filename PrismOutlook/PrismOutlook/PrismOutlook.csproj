@@ -96,6 +96,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Infragistics.WPF.DataTree">
+      <Version>20.1.9</Version>
+    </PackageReference>
     <PackageReference Include="Infragistics.WPF.OutlookBar">
       <Version>20.1.9</Version>
     </PackageReference>
