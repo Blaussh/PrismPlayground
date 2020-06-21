@@ -1,17 +1,11 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using PrismOutlook.Buisness;
 using PrismOutlook.Core;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PrismOutlook.Modules.Mail.ViewModels
 {
-    public class MailGroupViewModel : BindableBase
+    public class MailGroupViewModel : ViewModelBase
     {
         private ObservableCollection<NavigationItem> _items;
         public ObservableCollection<NavigationItem> Items
