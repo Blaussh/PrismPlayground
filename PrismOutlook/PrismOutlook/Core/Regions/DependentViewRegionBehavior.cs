@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 
 namespace PrismOutlook.Core.Regions
 {
@@ -29,23 +30,29 @@ namespace PrismOutlook.Core.Regions
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (var view in e.NewItems)
+                foreach (var newView in e.NewItems)
                 {
                     var dependentViews = new List<DependentViewInfo>();
-                    if (_dependentViewCache.ContainsKey(view))
+                    if (_dependentViewCache.ContainsKey(newView))
                     {
-                        dependentViews = _dependentViewCache[view];
+                        dependentViews = _dependentViewCache[newView];
                     }
                     else
                     {
-                        var atts = GetCustomAttributes<DependentViewAttribute>(view.GetType());
+                        var atts = GetCustomAttributes<DependentViewAttribute>(newView.GetType());
                         foreach (var att in atts)
                         {
                             var info = CreateDependentViewInfo(att);
+
+                            if (info.View is ISupportDataContext infoDC && newView is ISupportDataContext viewDC)
+                            {
+                                infoDC.DataContext = viewDC.DataContext;
+                            }
+
                             dependentViews.Add(info);
                         }
 
-                        _dependentViewCache.Add(view, dependentViews);
+                        _dependentViewCache.Add(newView, dependentViews);
                     }
                     dependentViews.ForEach(item => Region.RegionManager.Regions[item.Region].Add(item.View));
                 }
@@ -58,11 +65,31 @@ namespace PrismOutlook.Core.Regions
                     {
                         var dependentViews = _dependentViewCache[oldView];
                         dependentViews.ForEach(item => Region.RegionManager.Regions[item.Region].Remove(item.View));
+                        
+                        if (!ShouldKeepAlive(oldView))
+                            _dependentViewCache.Remove(oldView);
                     }
                 }
             }
         }
 
+        private bool ShouldKeepAlive(object oldView)
+        {
+            var regionLifetime = GetViewOrDataContextLifeTime(oldView);
+            if (regionLifetime != null)
+                return regionLifetime.KeepAlive;
+
+            return true;
+        }
+
+        IRegionMemberLifetime GetViewOrDataContextLifeTime(object view)
+        {
+            if (view is IRegionMemberLifetime regionLifeTime)
+                return regionLifeTime;
+            if (view is FrameworkElement fe)
+                return fe.DataContext as IRegionMemberLifetime;
+            return null;
+        }
 
         DependentViewInfo CreateDependentViewInfo(DependentViewAttribute attribute)
         {
@@ -78,12 +105,5 @@ namespace PrismOutlook.Core.Regions
         {
             return type.GetCustomAttributes(typeof(T), true).OfType<T>();
         }
-    }
-
-
-    public class DependentViewInfo
-    {
-        public object View { get; set; }
-        public string Region { get; set; }
     }
 }

@@ -102,6 +102,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Infragistics.WPF.DataGrids">
+      <Version>20.1.9</Version>
+    </PackageReference>
     <PackageReference Include="Infragistics.WPF.DataTree">
       <Version>20.1.9</Version>
     </PackageReference>
@@ -121,6 +124,14 @@
     <ProjectReference Include="..\..\PrismOutlook.Core\PrismOutlook.Core.csproj">
       <Project>{7dd37b61-3201-417e-82a5-84bbc60040e3}</Project>
       <Name>PrismOutlook.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PrismOutlook.Services.Interfaces\PrismOutlook.Services.Interfaces.csproj">
+      <Project>{6e2875c1-0f97-4004-95ee-46733c1f92ea}</Project>
+      <Name>PrismOutlook.Services.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PrismOutlook.Services\PrismOutlook.Services.csproj">
+      <Project>{87afc908-0b5b-4f68-9935-210f9a2f9fac}</Project>
+      <Name>PrismOutlook.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
